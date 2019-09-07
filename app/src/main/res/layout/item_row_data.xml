@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- Layout -->
+    <RelativeLayout
+        android:id="@+id/relativeMainLayout"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/margin_8"
+        android:layout_height="wrap_content">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+            android:fontFamily="@font/calibri_font"
+            android:textColor="@color/color_font_title"
+            android:textSize="@dimen/textSize_18"
+            android:textStyle="bold" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_title"
+            android:layout_toLeftOf="@+id/thumbnail"
+            android:layout_marginRight="@dimen/margin_10"
+            android:fontFamily="@font/calibri_font"
+            android:textColor="@color/color_font_description"
+            android:textSize="@dimen/textSize_16"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry" />
+
+
+        <!--  ListRow right side thumbnail image -->
+        <LinearLayout
+            android:id="@+id/thumbnail"
+            android:layout_below="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_3"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/img_right_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10">
+
+            <ImageView
+                android:id="@+id/img_href_display"
+                android:layout_width="@dimen/margin_70"
+                android:layout_height="@dimen/margin_70"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+        <!-- Right Arrow -->
+        <ImageView
+            android:id="@+id/img_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <!-- divider view -->
+    <View
+        android:layout_below="@+id/relativeMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1"
+        android:background="@color/color_white" />
+</RelativeLayout>
