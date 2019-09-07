@@ -11,13 +11,18 @@
         android:id="@+id/action_title"
         layout="@layout/action_bar_title" />
 
-    <!-- RecyclerView -->
-
+    <!-- RecyclerView with pull to refresh view -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_row_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

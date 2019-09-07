@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public CheckInternetConnection chkNet;
     private Context mContext;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private DataAdapter dataAdapter;
     private RecyclerView recyclerViewRowData;
     private TextView txtActionTitle;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         chkNet = new CheckInternetConnection(this);
         mRowList = new ArrayList<>();
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_event);
+        swipeRefreshLayout.setOnRefreshListener(this);
         txtActionTitle = (TextView) findViewById(R.id.txtActionTitle);
 
         //recyclerView
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     private void Call_WBS_SampleData() {
         //show the progressbar
         chkNet.showProgressDialogLoading();
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
 
         //creating a string request to send request to the url
         StringRequest stringRequest = new StringRequest(Request.Method.GET, API.getListAllData,
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         //hiding the progressbar after completion
                         chkNet.dismissProgressDialogLoading();
-
+                        swipeRefreshLayout.setRefreshing(false);
                         Log.d("Response", "--->" + response);
 
                         clearArrayList();
@@ -100,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             mRowList.addAll(responseData.getRows());
                         } else {
                             Log.d("", "No data found!");
+                            swipeRefreshLayout.setRefreshing(false);
                         }
 
                         //here update the adapter view
@@ -124,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Error", error.getLocalizedMessage() != null ? error.getLocalizedMessage() : getString(R.string.something_wrong_error));
                         }
                         chkNet.dismissProgressDialogLoading();
+                        swipeRefreshLayout.setRefreshing(false);
+
                     }
                 });
 
@@ -152,4 +160,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRefresh() {
+
+        if (chkNet.checkInternet()) {
+            Call_WBS_SampleData();
+        } else {
+            Utilities.showAlertDialog(mContext, getString(R.string.no_internet));
+        }
+
+    }
 }
